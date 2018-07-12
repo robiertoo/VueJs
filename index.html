@@ -13,8 +13,8 @@
 			<h4>{{title}}</h4>
 
 			<ul>
-				<li><router-link :to="{{name: 'transformers'}}">Transformers</router-link></li>
-				<li><router-link :to="{{name: 'game-of-thrones'}}">Game Of Thrones</router-link></li>
+				<li><router-link :to="{name: 'transformers'}">Transformers</router-link></li>
+				<li><router-link :to="{name: 'game-of-thrones'}">Game Of Thrones</router-link></li>
 			</ul>
 
 			<router-view></router-view>
@@ -55,7 +55,7 @@
 			template: "#gameOfThrones"
 		});
 		let router = new VueRouter({
-			// mode: "history",
+			mode: "history",
 			routes: [
 			{path: "/transformers", name: "transformers", component: Transformers},
 			{path : "/game-of-thrones", name: "game-of-thrones", component: GameOfThrones}
