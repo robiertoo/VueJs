@@ -15,6 +15,7 @@
 			<ul>
 				<li><router-link :to="{name: 'transformers'}">Transformers</router-link></li>
 				<li><router-link :to="{name: 'game-of-thrones'}">Game Of Thrones</router-link></li>
+				<li><router-link to="/arrow">Arrow</router-link></li>
 			</ul>
 
 			<router-view></router-view>
@@ -57,6 +58,13 @@
 		</div>
 	</template>
 
+	<template id="error404">
+		<div>
+			<h3>Página não encontrada</h3>
+			<p>Ops! Parece que a página não existe.</p>
+		</div>
+	</template>
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
 	<script>
@@ -84,12 +92,18 @@
 				}
 			}
 		});
+		let Error404 = Vue.component("error404", {
+			template: "#error404"
+		});
 		let TransformersContent = Vue.component("transformers-content", {
 			template: "#transformersContent"
 		});
 		let router = new VueRouter({
 			mode: "history",
 			routes: [
+			{
+				path: "/VueJs/", name: 'home', redirect: {name: "transformers-content", params: {name: "megatron"}}
+			},
 			{
 				path: "/transformers", name: "transformers", component: Transformers,
 				children: [
@@ -100,6 +114,9 @@
 			},
 			{
 				path : "/game-of-thrones", name: "game-of-thrones", component: GameOfThrones
+			},
+			{
+				path: "*", name: "error404", component: Error404
 			}
 			]
 		});
@@ -107,7 +124,7 @@
 			el: "#app",
 			router,
 			created(){
-				this.$router.push({name: "transformers-content", params: {name: "megatron"}});
+				// this.$router.push({name: "transformers-content", params: {name: "megatron"}});
 			},
 			data: {
 				title: "VueJS do jeito ninja!",
