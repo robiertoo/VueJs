@@ -25,12 +25,19 @@
 	
 	<template id="transformers">
 		<div>
-			<h3>Transformers</h3>
-			<ul>
-				<li>Bumblebee</li>
-				<li>Optimus Prime</li>
-				<li>Relâmpago Marquinhos</li>
-			</ul>
+			<div class="row">
+				<div class="col">
+					<h3>Transformers</h3>
+					<ul>
+						<li v-for="item in transformers">
+							<router-link :to="{name: 'transformers-content', params: {name: item.slug}}">{{item.name}}</router-link>
+						</li>
+					</ul>
+				</div>
+				<div class="col">
+					<router-view></router-view>
+				</div>
+			</div>
 		</div>
 	</template>
 
@@ -38,10 +45,15 @@
 		<div>
 			<h3>Game Of Thrones</h3>
 			<ul>
-				<li>Jon Snow</li>
-				<li>Daenerys Targaryen</li>
-				<li>Cersei Lannister</li>
+				<li v-for="item in gameOfThrones">{{item.name}}</li>
 			</ul>
+		</div>
+	</template>
+
+	<template id="transformersContent">
+		<div>
+			<h3>Conteúdo Transformers</h3>
+			{{$route.params.name}}
 		</div>
 	</template>
 
@@ -49,16 +61,46 @@
 	<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
 	<script>
 		let Transformers = Vue.component("transformers", {
-			template: "#transformers"
+			template: "#transformers",
+			data() {
+				return {
+					transformers: [
+					{name: "Optimus Prime", slug: "optimus-prime"},
+					{name: "Bumblebee", slug: "bumblebee"},
+					{name: "Megatron", slug: "megatron"}
+					]
+				}
+			}
 		});
 		let GameOfThrones = Vue.component("game-of-thrones", {
-			template: "#gameOfThrones"
+			template: "#gameOfThrones",
+			data() {
+				return {
+					gameOfThrones: [
+					{name: "Jon Snow"},
+					{name: "Daenerys Targaryen"},
+					{name: "Cersei Lannister"}
+					]
+				}
+			}
+		});
+		let TransformersContent = Vue.component("transformers-content", {
+			template: "#transformersContent"
 		});
 		let router = new VueRouter({
 			mode: "history",
 			routes: [
-			{path: "/transformers", name: "transformers", component: Transformers},
-			{path : "/game-of-thrones", name: "game-of-thrones", component: GameOfThrones}
+			{
+				path: "/transformers", name: "transformers", component: Transformers,
+				children: [
+				{
+					path: ":name", name: "transformers-content", component: TransformersContent
+				}
+				]
+			},
+			{
+				path : "/game-of-thrones", name: "game-of-thrones", component: GameOfThrones
+			}
 			]
 		});
 		var app = new Vue ({
