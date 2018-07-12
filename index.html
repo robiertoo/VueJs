@@ -27,6 +27,11 @@
 	<template id="transformers">
 		<div>
 			<div class="row">
+				<div v-if="sidebar" class="col">
+					SideBar
+				</div>
+			</div>
+			<div class="row">
 				<div class="col">
 					<h3>Transformers</h3>
 					<ul>
@@ -70,6 +75,12 @@
 	<script>
 		let Transformers = Vue.component("transformers", {
 			template: "#transformers",
+			props: {
+				sidebar: Boolean
+			},
+			created(){
+				console.log(this.sidebar);
+			},
 			data() {
 				return {
 					transformers: [
@@ -102,10 +113,13 @@
 			mode: "history",
 			routes: [
 			{
-				path: "/VueJs/", name: 'home', redirect: {name: "transformers-content", params: {name: "megatron"}}
+				path: "/VueJs/", name: 'home'
 			},
 			{
 				path: "/transformers", name: "transformers", component: Transformers,
+				props: {
+					sidebar: true,
+				},
 				children: [
 				{
 					path: ":name", name: "transformers-content", component: TransformersContent
