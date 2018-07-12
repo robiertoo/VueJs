@@ -1,0 +1,59 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VueJs - Teste</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+</head>
+<body>
+	
+	<div id="app">
+		<br><br>
+		<div class="container">
+			<h4>{{title}}</h4>
+			<div v-if="response.status == 'error'" class="alert alert-danger">{{response.msg}}</div>
+			<div v-if="loader.users" class="alert alert-primary">Carregando usuários</div>
+			<button @click.stop.prevent="getUsers()" class="btn btn-success">GET USERS</button>
+			<ul class="list-group">
+				<li v-for="user in users" class="list-group-item">{{user.name}}</li>
+			</ul>
+		</div>	
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+	<script>
+		let mixin = {
+			methods: {
+				getUsers(){
+					this.loader.users = true;
+					let url = "http://jsonplaceholder.typicode.com/users";
+					this.$http.get(url).then(function(response){
+						this.users = response.body;
+					}, function(error){
+						this.response.status = "error",
+						console.log(error);
+					}).finally(function(){
+						this.loader.users = false;
+					});
+				}
+			}
+		}
+		var app = new Vue ({
+			el: "#app",
+			mixins: [mixin],
+			data: {
+				title: "Olar Pessoar!",
+				users: [],
+				loader: {
+					users:false
+				},
+				response: {
+					msg: "Erro ao conectar!",
+					status: ""
+				}
+			}
+		});
+	</script>
+</body>
+</html>

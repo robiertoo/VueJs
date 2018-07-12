@@ -1,0 +1,80 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VueJs - Teste</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+</head>
+<body>
+	
+	<div id="app">
+		<br><br>
+		<div class="container">
+			<div class="card">
+				<input-form></input-form>
+
+				<my-list></my-list>
+			</div>
+		</div>	
+	</div>
+
+	<template id="form">
+		<div class="card-body">
+			<div class="form-group">				
+				<label for="">Título</label>
+				<input v-model="title" type="text" class="form-control">
+			</div>
+			<button @click.stop.prevent="submit()" class="btn btn-primary">Enviar</button>
+		</div>
+		
+	</template>
+	<template id="list">
+		<ul class="list-group">
+			<li v-for="item in list" class="list-group-item">{{item.title}}</li>
+		</ul>
+	</template>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		Vue.component("input-form", {
+			template: "#form",
+			data(){
+				return{
+					title: "",
+				}
+			},
+			methods: {
+				submit(){
+					this.$eventHub.$emit("submit", this.title);
+				}
+			}
+		});
+		Vue.component("my-list", {
+			template: "#list",
+			created(){
+				let vm = this;
+				this.$eventHub.$on("submit", function(title){
+					if(title){
+						vm.list.push({title: title});
+					}
+				});
+			},
+			data(){
+				return{
+					list:[
+					{ title: "Ir à feira." },
+					]
+				}
+			}
+		});
+		Vue.prototype.$eventHub = new Vue();
+		var app = new Vue ({
+			el: "#app",
+			data: {
+				title: "Olar Pessoar!"
+			}
+		});
+	</script>
+</body>
+</html>

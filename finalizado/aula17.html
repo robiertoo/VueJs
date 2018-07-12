@@ -1,0 +1,36 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VueJs - Teste</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+</head>
+<body>
+	
+	<div id="app">
+		<br><br>
+		<div class="container">
+			<h4>{{title}}</h4>
+			<button @click.stop.prevent="getUsers()" class="btn btn-success">GET USERS</button>
+		</div>	
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		let mixin = {
+			methods: {
+				getUsers(){
+					console.log("get users");
+				}
+			}
+		}
+		var app = new Vue ({
+			el: "#app",
+			mixins: [mixin],
+			data: {
+				title: "Olar Pessoar!"
+			}
+		});
+	</script>
+</body>
+</html>

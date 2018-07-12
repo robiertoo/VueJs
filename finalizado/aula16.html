@@ -1,0 +1,53 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VueJs - Teste</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+</head>
+<body>
+	
+	<div id="app">
+		<br><br>
+		<div class="container">
+			<card>
+				<h4 slot="title" class="card-tile">Card Title</h4>
+				<p slot="text" class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt, nesciunt, harum. Similique fugit illo explicabo facilis, obcaecati eveniet, voluptatem assumenda odit asperiores tenetur illum, ea omnis delectus molestiae neque dicta!</p>
+				<a slot="action" href="#" class="btn btn-primary">Go somewhere</a>
+			</card>
+			<card>
+				<h4 slot="title" class="card-tile">Card Title 2</h4>
+				<p slot="text" class="card-text">LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium ea, saepe modi rerum pariatur quaerat, non tempore vitae cum, sunt possimus! Incidunt saepe, inventore obcaecati culpa excepturi. Illum, veniam, est.</p>
+				<a slot="action" href="#" class="btn btn-primary">Go somewhere</a>
+			</card>
+		</div>	
+	</div>
+
+	<template id="card">
+		<div class="card">
+			<img src="http://via.placeholder.com/350x150" alt="" class="card-image-top">
+			<div class="card-body">
+				<slot name="title"></slot>
+				<slot name="text"></slot>
+				<slot name="action"></slot>
+			</div>
+		</div>
+	</template>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		Vue.component("card", {
+			template: "#card"
+		});
+		
+		var app = new Vue ({
+			el: "#app",
+			data: {
+				title: "Olar Pessoar!"
+			}
+		});
+	</script>
+</body>
+</html>

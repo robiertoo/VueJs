@@ -1,0 +1,79 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VueJs - Teste</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+</head>
+<body>
+	
+	<div id="app">
+		<br><br>
+		<div class="container">
+			<h4>{{title}}</h4>
+
+			<router-link to="/transformers">Transformers</router-link>	
+			<router-link to="/game-of-thrones">Game Of Thrones</router-link>	
+
+			<router-view></router-view>
+
+			<!-- <select v-model="movie">
+				<option value="game-of-thrones">Game of Thrones</option>
+				<option value="transformers">Transformers</option>
+			</select> -->
+
+			<component :is="movie"></component>
+			<!-- <game-of-thrones></game-of-thrones> -->
+			<!-- <transformers></transformers> -->
+		</div>	
+	</div>
+	
+	<template id="transformers">
+		<div>
+			<h3>Transformers</h3>
+			<ul>
+				<li>Bumblebee</li>
+				<li>Optimus Prime</li>
+				<li>Relâmpago Marquinhos</li>
+			</ul>
+		</div>
+	</template>
+
+	<template id="gameOfThrones">
+		<div>
+			<h3>Game Of Thrones</h3>
+			<ul>
+				<li>Jon Snow</li>
+				<li>Daenerys Targaryen</li>
+				<li>Cersei Lannister</li>
+			</ul>
+		</div>
+	</template>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+	
+	<script>
+		let Transformers = Vue.component("transformers", {
+			template: "#transformers"
+		});
+		let GameOfThrones = Vue.component("game-of-thrones", {
+			template: "#gameOfThrones"
+		});
+		let router = new VueRouter({
+			routes: [
+			{path: "/transformers", component: Transformers},
+			{path : "/game-of-thrones", component: GameOfThrones}
+			]
+		});
+		var app = new Vue ({
+			el: "#app",
+			router,
+			data: {
+				title: "VueJS do jeito ninja!",
+				movie: ""
+			}
+		});
+	</script>
+</body>
+</html>
